@@ -148,9 +148,9 @@ namespace LongHaulMod {
 			//Texture2D texEm = new Texture2D(114, 94);
 			//tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "Assets/portrait_queenbee_emission.png")));
 
-			NewCard.Add(name, displayName, 2, 2, metadata, CardComplexity.Intermediate, CardTemple.Nature,
+			NewCard.Add(name, displayName, MainPlugin.config.GunbotAttack, MainPlugin.config.GunbotHealth, metadata, CardComplexity.Intermediate, CardTemple.Nature,
 				description: desc,
-				bloodCost: 2,
+				bloodCost: MainPlugin.config.GunbotCost,
 				tribes: tribes,
 				abilities: abilities,
 				appearanceBehaviour: appearances,
