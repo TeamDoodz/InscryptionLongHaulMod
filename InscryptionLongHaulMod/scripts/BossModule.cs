@@ -5,7 +5,9 @@ using Pixelplacement;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using UnityEngine;
 
 namespace LongHaulMod {
@@ -64,6 +66,17 @@ namespace LongHaulMod {
 				return true;
 			}
 		}
+		class ProspectorDontClearQueuePatch {
+			static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions) {
+				var code = new List<CodeInstruction>(instructions);
+
+				for(int i=0; i< code.Count; i++) {
+					MainPlugin.logger.LogInfo($"{code[i].opcode} {code[i].operand}");
+				}
+
+				return code.AsEnumerable();
+			}
+		}
 
 		public static BossModule instance;
 
@@ -82,10 +95,23 @@ namespace LongHaulMod {
 					PatchGPCost();
 				}
 			}
+			//TODO: finish this
+			if(MainPlugin.config.ProspectorDontClearQueue) {
+				PatchProspectorDontClear();
+			}
+		}
+
+		private void PatchProspectorDontClear() {
+			var harmony = new Harmony(plugin.Info.Metadata.GUID + ".BossModule." + nameof(ProspectorDontClearQueuePatch));
+
+			var dc_original = typeof(ProspectorBossOpponent).GetNestedType("<StartNewPhaseSequence>d__4").GetMethod("MoveNext", BindingFlags.NonPublic | BindingFlags.Instance);
+			var dc_transpiler = typeof(ProspectorDontClearQueuePatch).GetMethod("Transpiler", BindingFlags.NonPublic | BindingFlags.Static);
+
+			harmony.Patch(dc_original, transpiler: new HarmonyMethod(dc_transpiler));
 		}
 
 		private void PatchGPCost() {
-			var harmony = new Harmony(plugin.Info.Metadata.GUID + ".BossModule." + nameof(AddQueenBeesToLeshyFightPatch));
+			var harmony = new Harmony(plugin.Info.Metadata.GUID + ".BossModule." + nameof(PreventBuyingRaresWithInferiorPeltsPatch));
 
 			var gp_original = typeof(TradeCardsForPelts).GetMethod("OnTradableSelected", BindingFlags.NonPublic | BindingFlags.Instance);
 			var gp_prefix = typeof(PreventBuyingRaresWithInferiorPeltsPatch).GetMethod("Prefix", BindingFlags.NonPublic | BindingFlags.Static);
@@ -116,7 +142,7 @@ namespace LongHaulMod {
 				CardMetaCategory.Rare
 			};
 
-			if (MainPlugin.config.GunbotsTradeable) metadata.Add(CardMetaCategory.TraderOffer);
+			//if (MainPlugin.config.GunbotsTradeable) metadata.Add(CardMetaCategory.TraderOffer);
 
 			List<Ability> abilities = new List<Ability>() {
 				Ability.Flying,
@@ -148,9 +174,9 @@ namespace LongHaulMod {
 			//Texture2D texEm = new Texture2D(114, 94);
 			//tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "Assets/portrait_queenbee_emission.png")));
 
-			NewCard.Add(name, displayName, 2, 2, metadata, CardComplexity.Intermediate, CardTemple.Nature,
+			NewCard.Add(name, displayName, MainPlugin.config.GunbotAttack, MainPlugin.config.GunbotHealth, metadata, CardComplexity.Intermediate, CardTemple.Nature,
 				description: desc,
-				bloodCost: 2,
+				bloodCost: MainPlugin.config.GunbotCost,
 				tribes: tribes,
 				abilities: abilities,
 				appearanceBehaviour: appearances,
