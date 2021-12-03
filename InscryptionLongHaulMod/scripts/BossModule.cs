@@ -116,7 +116,7 @@ namespace LongHaulMod {
 				CardMetaCategory.Rare
 			};
 
-			if (MainPlugin.config.GunbotsTradeable) metadata.Add(CardMetaCategory.TraderOffer);
+			//if (MainPlugin.config.GunbotsTradeable) metadata.Add(CardMetaCategory.TraderOffer);
 
 			List<Ability> abilities = new List<Ability>() {
 				Ability.Flying,

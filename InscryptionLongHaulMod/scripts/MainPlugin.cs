@@ -57,7 +57,7 @@ namespace LongHaulMod {
 			config.RareCardIgnorelist = Regex.Split(Config.Bind("TraderFixModule", "RareCardIgnorelist", "Gareth48, Treant, Snag", new ConfigDescription("Cards to ignore when fixing. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
 			config.BossModuleEnabled = Config.Bind("BossModule", "BossEnabled", true, new ConfigDescription("Enable the Boss Module. This will tweak boss fights to be harder.")).Value;
 			config.Gunbots = Config.Bind("BossModule", "QueenBees", true, new ConfigDescription("Leshy will summon Queen Bees in unopposed spaces during phase 2 of his fight. A queen bee is defined as: 2 power, 1 health, Sentry, Airborne.")).Value;
-			config.GunbotsTradeable = Config.Bind("BossModule", "QueenBeesTradeable", true, new ConfigDescription("Whether or not Queen Bees can appear in Golden Pelt trades. Requires QueenBees to be true to work.")).Value;
+			//config.GunbotsTradeable = Config.Bind("BossModule", "QueenBeesTradeable", true, new ConfigDescription("Whether or not Queen Bees can appear in Golden Pelt trades. Requires QueenBees to be true to work.")).Value;
 			config.TradeRareCards = Config.Bind("BossModule", "TradeRareCards", true, new ConfigDescription("If this is true, the Tapper/Trader will offer Rare cards during Phase 2 of his fight.")).Value;
 			config.RareRequiresGP = Config.Bind("BossModule", "RareRequiresGP", true, new ConfigDescription("When offering rare cards during Phase 2 of the Trapper/Trader fight, should said rare cards cost Golden Pelts?")).Value;
 		}
