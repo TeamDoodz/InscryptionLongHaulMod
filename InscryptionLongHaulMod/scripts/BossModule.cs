@@ -17,7 +17,10 @@ namespace LongHaulMod {
 			static void Prefix() {
 				foreach(CardSlot cardSlot in Singleton<BoardManager>.Instance.OpponentSlotsCopy) {
 					if(cardSlot.Card == null && cardSlot.opposingSlot.Card == null) {
-						instance.plugin.StartCoroutine(Singleton<BoardManager>.Instance.CreateCardInSlot(CardLoader.GetCardByName("QueenBee"), cardSlot, 0.1f, false));
+						CardInfo info = CardLoader.GetCardByName("QueenBee");
+						// i have been jebaited
+						//if (MainPlugin.config.UseAraQueenBee) info.ModAbilities.Add(Ability.Sentry);
+						instance.plugin.StartCoroutine(Singleton<BoardManager>.Instance.CreateCardInSlot(info, cardSlot, 0.1f, false));
 					}
 				}
 			}
@@ -85,7 +88,7 @@ namespace LongHaulMod {
 		}
 
 		public override void Awake() {
-			if (MainPlugin.config.Gunbots) {
+			if (MainPlugin.config.QueenBee ) {// && !MainPlugin.config.UseAraQueenBee) {
 				AddQueenBee();
 				PatchBeeInLeshyFight();
 			}
@@ -169,14 +172,14 @@ namespace LongHaulMod {
 			string desc = "The leader of the hive. She will attack preemptively.";
 
 			Texture2D tex = new Texture2D(114, 94);
-			tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "Assets/portrait_queenbee.png")));
+			tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "assets/portrait_queenbee.png")));
 
 			//Texture2D texEm = new Texture2D(114, 94);
 			//tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "Assets/portrait_queenbee_emission.png")));
 
-			NewCard.Add(name, displayName, MainPlugin.config.GunbotAttack, MainPlugin.config.GunbotHealth, metadata, CardComplexity.Intermediate, CardTemple.Nature,
+			NewCard.Add(name, displayName, MainPlugin.config.QueenBeeAttack, MainPlugin.config.QueenBeeHealth, metadata, CardComplexity.Intermediate, CardTemple.Nature,
 				description: desc,
-				bloodCost: MainPlugin.config.GunbotCost,
+				bloodCost: MainPlugin.config.QueenBeeCost,
 				tribes: tribes,
 				abilities: abilities,
 				appearanceBehaviour: appearances,
