@@ -22,6 +22,7 @@ namespace LongHaulMod {
 			internal int GunbotCost;
 			internal int GunbotAttack;
 			internal int GunbotHealth;
+			internal bool ProspectorDontClearQueue;
 		}
 
 		private const string GUID = "io.github.TeamDoodz.LongHaulMod";
@@ -66,6 +67,7 @@ namespace LongHaulMod {
 			//config.GunbotsTradeable = Config.Bind("BossModule", "QueenBeesTradeable", true, new ConfigDescription("Whether or not Queen Bees can appear in Golden Pelt trades. Requires QueenBees to be true to work.")).Value;
 			config.TradeRareCards = Config.Bind("BossModule", "TradeRareCards", true, new ConfigDescription("If this is true, the Tapper/Trader will offer Rare cards during Phase 2 of his fight.")).Value;
 			config.RareRequiresGP = Config.Bind("BossModule", "RareRequiresGP", true, new ConfigDescription("When offering rare cards during Phase 2 of the Trapper/Trader fight, should said rare cards cost Golden Pelts?")).Value;
+			//config.ProspectorDontClearQueue = Config.Bind("BossModule", "ProspectorDontClearQueue", true, new ConfigDescription("If this is true, the Prospector will not clear his queue after entering phase 2 of his fight.")).Value;
 		}
 
 	}
