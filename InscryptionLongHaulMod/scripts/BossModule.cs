@@ -26,15 +26,21 @@ namespace LongHaulMod {
 			}
 		}
 		class AddRareCardsToTrapperFightPatch {
+			private static CardInfo GetRandomRareCardWithAbility(int randomSeed) {
+				CardInfo outp = CardLoader.GetRandomRareCard(CardTemple.Nature);
+				CardModificationInfo mod = CardLoader.GetRandomAbilityModForCard(randomSeed, outp, true);
+				mod.fromCardMerge = true;
+				outp.Mods.Add(mod);
+
+				AbilityInfo ability = AbilitiesUtil.GetInfo(mod.abilities[0]);
+				MainPlugin.logger.LogInfo($"Spawning a \"{outp.DisplayedNameEnglish}\" ({outp.name}) with an added {ability.name} sigil.");
+				return outp;
+			}
+
 			static void Postfix(ref List<CardInfo> __result, int numCards, int randomSeed) {
 				System.Random random = new System.Random(randomSeed);
 
-				List<CardInfo> possibleCards = CardLoader.GetUnlockedCards(CardMetaCategory.Rare, CardTemple.Nature);
-				CardInfo rareCard = possibleCards[random.Next(0,possibleCards.Count)];
-				//TODO: Rare cards should get random sigils too, maybe
-				//rareCard.Mods.Add(new CardModificationInfo(AbilitiesUtil.GetRandomAbility(randomSeed, true, true)));
-
-				__result[random.Next(0, numCards)] = rareCard;
+				__result[random.Next(0, numCards)] = GetRandomRareCardWithAbility(randomSeed*200);
 			}
 		}
 		class PreventBuyingRaresWithInferiorPeltsPatch {
@@ -172,7 +178,8 @@ namespace LongHaulMod {
 			string desc = "The leader of the hive. She will attack preemptively.";
 
 			Texture2D tex = new Texture2D(114, 94);
-			tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "assets/portrait_queenbee.png")));
+			// For some reason when uploading a package to r2modman the directory is collapsed, this should fix that.
+			tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "portrait_queenbee.png")));
 
 			//Texture2D texEm = new Texture2D(114, 94);
 			//tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "Assets/portrait_queenbee_emission.png")));
