@@ -14,6 +14,7 @@ namespace LongHaulMod {
 		public struct ConfigOptions {
 			internal bool TraderFixEnabled;
 			public string[] RareCardIgnorelist;
+			public bool ForceRareBG;
 			public bool BossModuleEnabled;
 			public bool QueenBee;
 			public bool GunbotsTradeable;
@@ -60,8 +61,8 @@ namespace LongHaulMod {
 
 			config.TraderFixEnabled = Config.Bind("TraderFixModule", "TraderFixEnabled", true, new ConfigDescription("Enable the Trader Fix module. This will force cards with the rare card background to be rare cards and not appear in choice nodes. It will also prevent rare cards from being sold for wolf pelts or lower. Keep in mind that some cards like the Treant don't need to be \"fixed\" and should go to the ignorelist.")).Value;
 			
-			config.RareCardIgnorelist = Regex.Split(Config.Bind("TraderFixModule", "RareCardIgnorelist", "Gareth48, Treant, Snag", new ConfigDescription("Cards to ignore when fixing. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
-
+			config.RareCardIgnorelist = Regex.Split(Config.Bind("TraderFixModule", "RareCardIgnorelist", "Gareth48, Garethmod_Treant, Garethmod_Snag, beast_2, beast_3, caninegod, hoovedgod", new ConfigDescription("Cards to ignore when fixing. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
+			config.ForceRareBG = Config.Bind("TraderFixModule", "ForceRareBG", true, new ConfigDescription("Forces rare cards to have the rare background.")).Value;
 
 			config.BossModuleEnabled = Config.Bind("BossModule", "BossEnabled", true, new ConfigDescription("Enable the Boss Module. This will tweak boss fights to be harder.")).Value;
 

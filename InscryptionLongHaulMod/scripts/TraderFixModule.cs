@@ -20,6 +20,10 @@ namespace LongHaulMod {
 					continue;
 				}
 
+				if(card.metaCategories.Contains(CardMetaCategory.Rare) && !card.appearanceBehaviour.Contains(CardAppearanceBehaviour.Appearance.RareCardBackground))  {
+					MainPlugin.logger.LogWarning($"Card \"{card.DisplayedNameEnglish}\" ({card.name}) is marked as rare but deos not have rare background. Fixing!");
+				}
+
 				if (card.appearanceBehaviour.Contains(CardAppearanceBehaviour.Appearance.RareCardBackground) && !card.metaCategories.Contains(CardMetaCategory.Rare)) { // ...If it has a rare background but is not a rare...
 					MainPlugin.logger.LogWarning($"Card \"{card.DisplayedNameEnglish}\" ({card.name}) has rare background but is not a rare. Fixing!");
 					card.metaCategories.Add(CardMetaCategory.Rare); // ...add that metadata.
