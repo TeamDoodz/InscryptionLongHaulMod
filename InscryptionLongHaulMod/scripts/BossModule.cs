@@ -28,6 +28,18 @@ namespace LongHaulMod {
 		class AddRareCardsToTrapperFightPatch {
 			private static CardInfo GetRandomRareCardWithAbility(int randomSeed) {
 				CardInfo outp = CardLoader.GetRandomRareCard(CardTemple.Nature);
+				// we dont want a card in the blacklist, so get new ones until we get a legal one
+				{
+					int i;
+					for (i = 0; i < 100 && MainPlugin.config.RareBlacklist.Contains(outp.name); i++) {
+						outp = CardLoader.GetRandomRareCard(CardTemple.Nature);
+					}
+					if (i == 99) {
+						//FIXME: Unlucky players or those with large blacklists may come across this warning despite there being legal cards
+						MainPlugin.logger.LogWarning("Could not find card not in blacklist; is the blacklist too large?");
+					}
+				}
+
 				CardModificationInfo mod = CardLoader.GetRandomAbilityModForCard(randomSeed, outp, true);
 				mod.fromCardMerge = true;
 				outp.Mods.Add(mod);
@@ -105,9 +117,9 @@ namespace LongHaulMod {
 				}
 			}
 			//TODO: finish this
-			if(MainPlugin.config.ProspectorDontClearQueue) {
-				PatchProspectorDontClear();
-			}
+			//if(MainPlugin.config.ProspectorDontClearQueue) {
+				//PatchProspectorDontClear();
+			//}
 		}
 
 		private void PatchProspectorDontClear() {
