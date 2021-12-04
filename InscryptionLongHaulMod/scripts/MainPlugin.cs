@@ -76,7 +76,7 @@ namespace LongHaulMod {
 			config.RareRequiresGP = Config.Bind("BossModule", "RareRequiresGP", true, new ConfigDescription("When offering rare cards during Phase 2 of the Trapper/Trader fight, should said rare cards cost Golden Pelts?")).Value;
 			config.RareInscribed = Config.Bind("BossModule", "RareInscribed", true, new ConfigDescription("If this is true, rare cards offered by the Trader boss will gain an extra sigil, similarly to the regular cards.")).Value;
 			config.RareBlacklist = Regex.Split(Config.Bind("BossModule", "RareBlacklist", "Amoeba", new ConfigDescription("Rare cards that shouldn't be played by the Trapper/Trader during his fight. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
-			//config.ProspectorDontClearQueue = Config.Bind("BossModule", "ProspectorDontClearQueue", true, new ConfigDescription("If this is true, the Prospector will not clear his queue after entering phase 2 of his fight.")).Value;
+			//config.ProspectorDontClearQueue = Config.Bind("BossModule", "ProspectorDontClearQueue", false, new ConfigDescription("(UNFINISHED FEATURE - WILL CREATE ERRORS.) If this is true, the Prospector will not clear his queue after entering phase 2 of his fight.")).Value;
 		}
 
 	}

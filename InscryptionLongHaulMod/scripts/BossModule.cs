@@ -190,8 +190,7 @@ namespace LongHaulMod {
 			string desc = "The leader of the hive. She will attack preemptively.";
 
 			Texture2D tex = new Texture2D(114, 94);
-			// For some reason when uploading a package to r2modman the directory is collapsed, this should fix that.
-			tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "portrait_queenbee.png")));
+			tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "assets/portrait_queenbee.png")));
 
 			//Texture2D texEm = new Texture2D(114, 94);
 			//tex.LoadImage(File.ReadAllBytes(Path.Combine(plugin.Info.Location.Replace("LongHaulMod.dll", ""), "Assets/portrait_queenbee_emission.png")));
