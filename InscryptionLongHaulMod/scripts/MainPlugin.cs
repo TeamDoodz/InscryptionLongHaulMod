@@ -70,8 +70,6 @@ namespace LongHaulMod {
 			config.QueenBeeCost = Config.Bind("BossModule", "QueenBeeCost", 2, new ConfigDescription("How much blood a queen bee costs.")).Value;
 			config.QueenBeeAttack = Config.Bind("BossModule", "QueenBeeAttack", 3, new ConfigDescription("How much power a queen bee has.")).Value;
 			config.QueenBeeHealth = Config.Bind("BossModule", "QueenBeeHP", 3, new ConfigDescription("How much health a queen bee has.")).Value;
-			//config.UseAraQueenBee = Config.Bind("BossModule", "UseAraQueenBee", false, new ConfigDescription("Use the queen bee from AraCardExpansion instead. If this is true, the Queen Bee card will not be initialized. Use the save fixer mod before messing with this setting.")).Value;
-			//config.GunbotsTradeable = Config.Bind("BossModule", "QueenBeesTradeable", true, new ConfigDescription("Whether or not Queen Bees can appear in Golden Pelt trades. Requires QueenBees to be true to work.")).Value;
 			
 			config.TradeRareCards = Config.Bind("BossModule", "TradeRareCards", true, new ConfigDescription("If this is true, the Tapper/Trader will offer Rare cards during Phase 2 of his fight.")).Value;
 			config.RareRequiresGP = Config.Bind("BossModule", "RareRequiresGP", true, new ConfigDescription("When offering rare cards during Phase 2 of the Trapper/Trader fight, should said rare cards cost Golden Pelts?")).Value;

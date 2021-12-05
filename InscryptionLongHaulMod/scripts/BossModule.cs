@@ -106,7 +106,7 @@ namespace LongHaulMod {
 		}
 
 		public override void Awake() {
-			if (MainPlugin.config.QueenBee ) {// && !MainPlugin.config.UseAraQueenBee) {
+			if (MainPlugin.config.QueenBee ) {
 				AddQueenBee();
 				PatchBeeInLeshyFight();
 			}
