@@ -12,8 +12,9 @@ namespace LongHaulMod {
 	public class MainPlugin : BaseUnityPlugin {
 
 		public struct ConfigOptions {
-			public bool TraderFixEnabled;
+			internal bool TraderFixEnabled;
 			public string[] RareCardIgnorelist;
+			public bool ForceRareBG;
 			public bool BossModuleEnabled;
 			public bool QueenBee;
 			public bool GunbotsTradeable;
@@ -22,13 +23,15 @@ namespace LongHaulMod {
 			internal int QueenBeeCost;
 			internal int QueenBeeAttack;
 			internal int QueenBeeHealth;
-			internal bool ProspectorDontClearQueue;
-			internal bool UseAraQueenBee;
+			public int MoonPowerBuff;
+			public int MoonHealthBuff;
+			internal bool RareInscribed;
+			internal string[] RareBlacklist;
 		}
 
 		private const string GUID = "io.github.TeamDoodz.LongHaulMod";
 		private const string Name = "LongHaulMod";
-		private const string Version = "1.0.0";
+		private const string Version = "1.0.7";
 
 		public static ConfigOptions config;
 
@@ -59,17 +62,25 @@ namespace LongHaulMod {
 			Logger.LogInfo($"Reading config..."); 
 
 			config.TraderFixEnabled = Config.Bind("TraderFixModule", "TraderFixEnabled", true, new ConfigDescription("Enable the Trader Fix module. This will force cards with the rare card background to be rare cards and not appear in choice nodes. It will also prevent rare cards from being sold for wolf pelts or lower. Keep in mind that some cards like the Treant don't need to be \"fixed\" and should go to the ignorelist.")).Value;
-			config.RareCardIgnorelist = Regex.Split(Config.Bind("TraderFixModule", "RareCardIgnorelist", "Gareth48, Treant, Snag", new ConfigDescription("Cards to ignore when fixing. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
+			
+			config.RareCardIgnorelist = Regex.Split(Config.Bind("TraderFixModule", "RareCardIgnorelist", "Gareth48, Garethmod_Treant, Garethmod_Snag, beast_2, beast_3, caninegod, hoovedgod", new ConfigDescription("Cards to ignore when fixing. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
+			config.ForceRareBG = Config.Bind("TraderFixModule", "ForceRareBG", true, new ConfigDescription("Forces rare cards to have the rare background.")).Value;
+
 			config.BossModuleEnabled = Config.Bind("BossModule", "BossEnabled", true, new ConfigDescription("Enable the Boss Module. This will tweak boss fights to be harder.")).Value;
+
 			config.QueenBee = Config.Bind("BossModule", "QueenBees", true, new ConfigDescription("Leshy will summon Queen Bees in unopposed spaces during phase 2 of his fight. A queen bee is defined as: 2 power, 1 health, Sentry, Airborne.")).Value;
 			config.QueenBeeCost = Config.Bind("BossModule", "QueenBeeCost", 2, new ConfigDescription("How much blood a queen bee costs.")).Value;
 			config.QueenBeeAttack = Config.Bind("BossModule", "QueenBeeAttack", 3, new ConfigDescription("How much power a queen bee has.")).Value;
 			config.QueenBeeHealth = Config.Bind("BossModule", "QueenBeeHP", 3, new ConfigDescription("How much health a queen bee has.")).Value;
-			//config.UseAraQueenBee = Config.Bind("BossModule", "UseAraQueenBee", false, new ConfigDescription("Use the queen bee from AraCardExpansion instead. If this is true, the Queen Bee card will not be initialized. Use the save fixer mod before messing with this setting.")).Value;
-			//config.GunbotsTradeable = Config.Bind("BossModule", "QueenBeesTradeable", true, new ConfigDescription("Whether or not Queen Bees can appear in Golden Pelt trades. Requires QueenBees to be true to work.")).Value;
+			
+			//config.MoonPowerBuff = Config.Bind("BossModule", "MoonPowerBuff", 1, new ConfigDescription("Adds this amount to the Moon's power.")).Value;
+			//config.MoonHealthBuff = Config.Bind("BossModule", "MoonHealthBuff", 5, new ConfigDescription("Adds this amount to the Moon's health.")).Value;
+			
 			config.TradeRareCards = Config.Bind("BossModule", "TradeRareCards", true, new ConfigDescription("If this is true, the Tapper/Trader will offer Rare cards during Phase 2 of his fight.")).Value;
 			config.RareRequiresGP = Config.Bind("BossModule", "RareRequiresGP", true, new ConfigDescription("When offering rare cards during Phase 2 of the Trapper/Trader fight, should said rare cards cost Golden Pelts?")).Value;
-			//config.ProspectorDontClearQueue = Config.Bind("BossModule", "ProspectorDontClearQueue", true, new ConfigDescription("If this is true, the Prospector will not clear his queue after entering phase 2 of his fight.")).Value;
+			config.RareInscribed = Config.Bind("BossModule", "RareInscribed", true, new ConfigDescription("If this is true, rare cards offered by the Trader boss will gain an extra sigil, similarly to the regular cards.")).Value;
+			config.RareBlacklist = Regex.Split(Config.Bind("BossModule", "RareBlacklist", "Amoeba, MontyPython", new ConfigDescription("Rare cards that shouldn't be played by the Trapper/Trader during his fight. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
+			//config.ProspectorDontClearQueue = Config.Bind("BossModule", "ProspectorDontClearQueue", false, new ConfigDescription("(UNFINISHED FEATURE - WILL CREATE ERRORS.) If this is true, the Prospector will not clear his queue after entering phase 2 of his fight.")).Value;
 		}
 
 	}

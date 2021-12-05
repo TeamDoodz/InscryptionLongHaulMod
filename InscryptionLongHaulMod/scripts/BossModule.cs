@@ -17,24 +17,39 @@ namespace LongHaulMod {
 			static void Prefix() {
 				foreach(CardSlot cardSlot in Singleton<BoardManager>.Instance.OpponentSlotsCopy) {
 					if(cardSlot.Card == null && cardSlot.opposingSlot.Card == null) {
-						CardInfo info = CardLoader.GetCardByName("QueenBee");
-						// i have been jebaited
-						//if (MainPlugin.config.UseAraQueenBee) info.ModAbilities.Add(Ability.Sentry);
-						instance.plugin.StartCoroutine(Singleton<BoardManager>.Instance.CreateCardInSlot(info, cardSlot, 0.1f, false));
+						instance.plugin.StartCoroutine(Singleton<BoardManager>.Instance.CreateCardInSlot(CardLoader.GetCardByName("QueenBee"), cardSlot, 0.1f, false));
 					}
 				}
 			}
 		}
 		class AddRareCardsToTrapperFightPatch {
+			private static CardInfo GetRandomRareCardWithAbility(int randomSeed) {
+				CardInfo outp = CardLoader.GetRandomRareCard(CardTemple.Nature);
+				// we dont want a card in the blacklist, so get new ones until we get a legal one
+				{
+					int i;
+					for (i = 0; i < 100 && MainPlugin.config.RareBlacklist.Contains(outp.name); i++) {
+						outp = CardLoader.GetRandomRareCard(CardTemple.Nature);
+					}
+					if (i == 99) {
+						//FIXME: Unlucky players or those with large blacklists may come across this warning despite there being legal cards
+						MainPlugin.logger.LogWarning("Could not find card not in blacklist; is the blacklist too large?");
+					}
+				}
+
+				CardModificationInfo mod = CardLoader.GetRandomAbilityModForCard(randomSeed, outp, true);
+				mod.fromCardMerge = true;
+				outp.Mods.Add(mod);
+
+				AbilityInfo ability = AbilitiesUtil.GetInfo(mod.abilities[0]);
+				MainPlugin.logger.LogInfo($"Spawning a \"{outp.DisplayedNameEnglish}\" ({outp.name}) with an added {ability.name} sigil.");
+				return outp;
+			}
+
 			static void Postfix(ref List<CardInfo> __result, int numCards, int randomSeed) {
 				System.Random random = new System.Random(randomSeed);
 
-				List<CardInfo> possibleCards = CardLoader.GetUnlockedCards(CardMetaCategory.Rare, CardTemple.Nature);
-				CardInfo rareCard = possibleCards[random.Next(0,possibleCards.Count)];
-				//TODO: Rare cards should get random sigils too, maybe
-				//rareCard.Mods.Add(new CardModificationInfo(AbilitiesUtil.GetRandomAbility(randomSeed, true, true)));
-
-				__result[random.Next(0, numCards)] = rareCard;
+				__result[random.Next(0, numCards)] = GetRandomRareCardWithAbility(randomSeed*200);
 			}
 		}
 		class PreventBuyingRaresWithInferiorPeltsPatch {
@@ -88,7 +103,7 @@ namespace LongHaulMod {
 		}
 
 		public override void Awake() {
-			if (MainPlugin.config.QueenBee ) {// && !MainPlugin.config.UseAraQueenBee) {
+			if (MainPlugin.config.QueenBee ) {
 				AddQueenBee();
 				PatchBeeInLeshyFight();
 			}
@@ -98,10 +113,17 @@ namespace LongHaulMod {
 					PatchGPCost();
 				}
 			}
+			//BuffMoon();
 			//TODO: finish this
-			if(MainPlugin.config.ProspectorDontClearQueue) {
-				PatchProspectorDontClear();
-			}
+			//if(MainPlugin.config.ProspectorDontClearQueue) {
+				//PatchProspectorDontClear();
+			//}
+		}
+
+		private void BuffMoon() {
+			int p = MainPlugin.config.MoonPowerBuff;
+			int h = MainPlugin.config.MoonHealthBuff;
+			CardLoader.GetCardByName("!GIANTCARD_MOON").Mods.Add(new CardModificationInfo(p,h));
 		}
 
 		private void PatchProspectorDontClear() {
