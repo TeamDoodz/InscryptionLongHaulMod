@@ -17,10 +17,7 @@ namespace LongHaulMod {
 			static void Prefix() {
 				foreach(CardSlot cardSlot in Singleton<BoardManager>.Instance.OpponentSlotsCopy) {
 					if(cardSlot.Card == null && cardSlot.opposingSlot.Card == null) {
-						CardInfo info = CardLoader.GetCardByName("QueenBee");
-						// i have been jebaited
-						//if (MainPlugin.config.UseAraQueenBee) info.ModAbilities.Add(Ability.Sentry);
-						instance.plugin.StartCoroutine(Singleton<BoardManager>.Instance.CreateCardInSlot(info, cardSlot, 0.1f, false));
+						instance.plugin.StartCoroutine(Singleton<BoardManager>.Instance.CreateCardInSlot(CardLoader.GetCardByName("QueenBee"), cardSlot, 0.1f, false));
 					}
 				}
 			}
@@ -116,10 +113,17 @@ namespace LongHaulMod {
 					PatchGPCost();
 				}
 			}
+			BuffMoon();
 			//TODO: finish this
 			//if(MainPlugin.config.ProspectorDontClearQueue) {
 				//PatchProspectorDontClear();
 			//}
+		}
+
+		private void BuffMoon() {
+			int p = MainPlugin.config.MoonPowerBuff;
+			int h = MainPlugin.config.MoonHealthBuff;
+			CardLoader.GetCardByName("!GIANTCARD_MOON").Mods.Add(new CardModificationInfo(p,h));
 		}
 
 		private void PatchProspectorDontClear() {

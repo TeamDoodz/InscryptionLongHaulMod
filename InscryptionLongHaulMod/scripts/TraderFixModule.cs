@@ -22,6 +22,7 @@ namespace LongHaulMod {
 
 				if(card.metaCategories.Contains(CardMetaCategory.Rare) && !card.appearanceBehaviour.Contains(CardAppearanceBehaviour.Appearance.RareCardBackground))  {
 					MainPlugin.logger.LogWarning($"Card \"{card.DisplayedNameEnglish}\" ({card.name}) is marked as rare but deos not have rare background. Fixing!");
+					card.appearanceBehaviour.Add(CardAppearanceBehaviour.Appearance.RareCardBackground);
 				}
 
 				if (card.appearanceBehaviour.Contains(CardAppearanceBehaviour.Appearance.RareCardBackground) && !card.metaCategories.Contains(CardMetaCategory.Rare)) { // ...If it has a rare background but is not a rare...

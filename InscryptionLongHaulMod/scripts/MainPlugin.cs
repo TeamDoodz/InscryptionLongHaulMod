@@ -23,6 +23,8 @@ namespace LongHaulMod {
 			internal int QueenBeeCost;
 			internal int QueenBeeAttack;
 			internal int QueenBeeHealth;
+			public int MoonPowerBuff;
+			public int MoonHealthBuff;
 			internal bool RareInscribed;
 			internal string[] RareBlacklist;
 		}
@@ -70,6 +72,9 @@ namespace LongHaulMod {
 			config.QueenBeeCost = Config.Bind("BossModule", "QueenBeeCost", 2, new ConfigDescription("How much blood a queen bee costs.")).Value;
 			config.QueenBeeAttack = Config.Bind("BossModule", "QueenBeeAttack", 3, new ConfigDescription("How much power a queen bee has.")).Value;
 			config.QueenBeeHealth = Config.Bind("BossModule", "QueenBeeHP", 3, new ConfigDescription("How much health a queen bee has.")).Value;
+			
+			//config.MoonPowerBuff = Config.Bind("BossModule", "MoonPowerBuff", 1, new ConfigDescription("Adds this amount to the Moon's power.")).Value;
+			//config.MoonHealthBuff = Config.Bind("BossModule", "MoonHealthBuff", 5, new ConfigDescription("Adds this amount to the Moon's health.")).Value;
 			
 			config.TradeRareCards = Config.Bind("BossModule", "TradeRareCards", true, new ConfigDescription("If this is true, the Tapper/Trader will offer Rare cards during Phase 2 of his fight.")).Value;
 			config.RareRequiresGP = Config.Bind("BossModule", "RareRequiresGP", true, new ConfigDescription("When offering rare cards during Phase 2 of the Trapper/Trader fight, should said rare cards cost Golden Pelts?")).Value;
