@@ -113,7 +113,7 @@ namespace LongHaulMod {
 					PatchGPCost();
 				}
 			}
-			BuffMoon();
+			//BuffMoon();
 			//TODO: finish this
 			//if(MainPlugin.config.ProspectorDontClearQueue) {
 				//PatchProspectorDontClear();

@@ -31,7 +31,7 @@ namespace LongHaulMod {
 
 		private const string GUID = "io.github.TeamDoodz.LongHaulMod";
 		private const string Name = "LongHaulMod";
-		private const string Version = "1.0.0";
+		private const string Version = "1.0.7";
 
 		public static ConfigOptions config;
 
