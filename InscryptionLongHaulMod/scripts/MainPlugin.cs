@@ -27,6 +27,11 @@ namespace LongHaulMod {
 			public int MoonHealthBuff;
 			internal bool RareInscribed;
 			internal string[] RareBlacklist;
+			internal bool BattleModuleEnabled;
+			internal float OpponentRareCardChance;
+			internal string[] OpponentRareCardBlacklist;
+			internal float OpponentExtraSigilChance;
+			internal float OpponentCombinedCardChance;
 		}
 
 		private const string GUID = "io.github.TeamDoodz.LongHaulMod";
@@ -38,7 +43,8 @@ namespace LongHaulMod {
 		public static BepInEx.Logging.ManualLogSource logger;
 
 		private TraderFixModule tf;
-		private BossModule bm;
+		private BossModule bom;
+		private BattleModule bam;
 
 		private void Awake() {
 			Logger.LogInfo($"{Name} has been awoken");
@@ -47,9 +53,11 @@ namespace LongHaulMod {
 			GetConfig();
 
 			if (config.TraderFixEnabled) tf = new TraderFixModule(this);
-			if(config.BossModuleEnabled) bm = new BossModule(this);
+			if(config.BossModuleEnabled) bom = new BossModule(this);
+			if (config.BattleModuleEnabled) bam = new BattleModule(this);
 
-			if (config.BossModuleEnabled) bm.Awake();
+			if (config.BossModuleEnabled) bom.Awake();
+			if (config.BattleModuleEnabled) bam.Awake();
 		}
 
 		private void Start() {
@@ -58,7 +66,7 @@ namespace LongHaulMod {
 			if(config.TraderFixEnabled) tf.Start();
 		}
 
-		private void GetConfig(bool createIfNonexistent = true) {
+		private void GetConfig() {
 			Logger.LogInfo($"Reading config..."); 
 
 			config.TraderFixEnabled = Config.Bind("TraderFixModule", "TraderFixEnabled", true, new ConfigDescription("Enable the Trader Fix module. This will force cards with the rare card background to be rare cards and not appear in choice nodes. It will also prevent rare cards from being sold for wolf pelts or lower. Keep in mind that some cards like the Treant don't need to be \"fixed\" and should go to the ignorelist.")).Value;
@@ -81,6 +89,13 @@ namespace LongHaulMod {
 			config.RareInscribed = Config.Bind("BossModule", "RareInscribed", true, new ConfigDescription("If this is true, rare cards offered by the Trader boss will gain an extra sigil, similarly to the regular cards.")).Value;
 			config.RareBlacklist = Regex.Split(Config.Bind("BossModule", "RareBlacklist", "Amoeba, MontyPython", new ConfigDescription("Rare cards that shouldn't be played by the Trapper/Trader during his fight. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
 			//config.ProspectorDontClearQueue = Config.Bind("BossModule", "ProspectorDontClearQueue", false, new ConfigDescription("(UNFINISHED FEATURE - WILL CREATE ERRORS.) If this is true, the Prospector will not clear his queue after entering phase 2 of his fight.")).Value;
+
+			config.BattleModuleEnabled = Config.Bind("BattleModule", "BattleEnabled", true, "Enables the Battle Module. This one makes all battles, not just bosses, more difficult.").Value;
+			
+			config.OpponentRareCardChance = Config.Bind("BattleModule", "OpponentRareCardChance", 6.25f, "Percent chance for any card the opponent plays to be replaced with a random rare one.").Value;
+			config.OpponentRareCardBlacklist = Regex.Split(Config.Bind("BattleModule", "OpponentRareCardBlacklist", "Amoeba, MontyPython", "Rare cards that the opponent will not play. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
+			config.OpponentExtraSigilChance = Config.Bind("BattleModule", "OpponentExtraSigilChance", 12.5f, "Percent chance for any card the opponent plays to gain a random sigil.").Value;
+			config.OpponentCombinedCardChance = Config.Bind("BattleModule", "OpponentCombinedCardChance", 6.25f, "Percent chance for any card the opponent plays to be a combined card with double stats.").Value;
 		}
 
 	}

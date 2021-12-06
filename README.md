@@ -15,3 +15,10 @@ Makes bosses more difficult. Does the following things:
 * Leshy will spawn Queen Bees in unopposed spaces on his side of the board at the beginning of phase 2 of his fight.
 * During phase 2 of his fight, the Trapper/Trader will offer rare cards for sale as well as the normal cards he usually provides. A blacklist can be used to restrict the cards he pulls out.
 * These rare cards cost Golden Pelts to purchase.
+
+### Battle Module
+Makes all battles difficult, not just bosses. Does the following things:
+* All cards played by the opponent have a chance to be:
+	* Replaced by a random rare card
+	* Given a random new sigil
+	* Made combined (stats doubled) 
