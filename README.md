@@ -1,4 +1,4 @@
-# InscryptionLongHaulMod
+# LongHaul
 Tweaks, features and bugfixes to make the game harder. This mod is highly configurable - if you don't like a feature, disable it.
 
 ## Modules
@@ -22,3 +22,6 @@ Buffs difficulty of all battles, not just bosses. Does the following things:
 	* Replaced by a random rare card
 	* Given a random new sigil
 	* Made combined (stats doubled) 
+
+## I found a bug/error, what do I do?
+Please report the issue on LongHaul's Github page and ping me on the Inscryption Modding Discord server (teamdoodz#5281).
