@@ -52,11 +52,11 @@ namespace LongHaulMod {
 			}
 
 			private static Ability GetRandoAbility(List<Ability> blacklist, int seed) {
-				Ability outp = AbilitiesUtil.GetRandomAbility(seed,true,true,maxPower:5);
+				Ability outp = AbilitiesUtil.GetRandomAbility(seed,true,true,maxPower:MainPlugin.config.OpponentExtraSigilMaxPower);
 				int i;
 				for (i = 0; i < 100 && blacklist.Contains(outp); i++) {
 					MainPlugin.logger.LogWarning($"Tried to apply illegal sigil {outp} to card. Trying again!");
-					outp = AbilitiesUtil.GetRandomAbility(seed + i, true, true, maxPower: 5);
+					outp = AbilitiesUtil.GetRandomAbility(seed + i, true, true, maxPower: MainPlugin.config.OpponentExtraSigilMaxPower);
 				}
 				if (i == 99) {
 					//FIXME: Unlucky players or those with large blacklists may come across this warning despite there being legal sigils

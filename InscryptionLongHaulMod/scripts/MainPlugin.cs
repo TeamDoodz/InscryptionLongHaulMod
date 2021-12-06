@@ -31,6 +31,7 @@ namespace LongHaulMod {
 			internal float OpponentRareCardChance;
 			internal string[] OpponentRareCardBlacklist;
 			internal float OpponentExtraSigilChance;
+			internal int OpponentExtraSigilMaxPower;
 			internal float OpponentCombinedCardChance;
 			internal string[] OpponentCardBuffIgnorelist;
 		}
@@ -96,6 +97,7 @@ namespace LongHaulMod {
 			config.OpponentRareCardChance = Config.Bind("BattleModule", "OpponentRareCardChance", 6.25f, "Percent chance for any card the opponent plays to be replaced with a random rare one.").Value;
 			config.OpponentRareCardBlacklist = Regex.Split(Config.Bind("BattleModule", "OpponentRareCardBlacklist", "Amoeba, MontyPython", "Rare cards that the opponent will not play. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
 			config.OpponentExtraSigilChance = Config.Bind("BattleModule", "OpponentExtraSigilChance", 12.5f, "Percent chance for any card the opponent plays to gain a random sigil.").Value;
+			config.OpponentExtraSigilMaxPower = Config.Bind("BattleModule", "OpponentExtraSigilChance", 4, "Maximum level of power sigil to apply to a card, on a scale of 0 to 5.").Value;
 			config.OpponentCombinedCardChance = Config.Bind("BattleModule", "OpponentCombinedCardChance", 6.25f, "Percent chance for any card the opponent plays to be a combined card with double stats.").Value;
 			config.OpponentCardBuffIgnorelist = Regex.Split(Config.Bind("BattleModule", "OpponentCardBuffIgnorelist", "Mule, BaitBucket", "List of cards that will not gain extra buffs. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
 		}
