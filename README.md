@@ -17,7 +17,7 @@ Makes bosses more difficult. Does the following things:
 * These rare cards cost Golden Pelts to purchase.
 
 ### Battle Module
-Makes all battles difficult, not just bosses. Does the following things:
+Buffs difficulty of all battles, not just bosses. Does the following things:
 * All cards played by the opponent have a chance to be:
 	* Replaced by a random rare card
 	* Given a random new sigil
