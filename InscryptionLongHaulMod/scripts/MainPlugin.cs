@@ -57,6 +57,7 @@ namespace LongHaulMod {
 			if (config.BattleModuleEnabled) bam = new BattleModule(this);
 
 			if (config.BossModuleEnabled) bom.Awake();
+			if (config.BattleModuleEnabled) bam.Awake();
 		}
 
 		private void Start() {
