@@ -10,40 +10,44 @@ namespace LongHaulMod {
 
 		class BuffPlayedCardsPatch {
 			static void Prefix(PlayableCard card) {
-				Random rand = new Random();
+				if (!MainPlugin.config.OpponentCardBuffIgnorelist.Contains(card.Info.name)) {
+					Random rand = new Random();
 
-				CardInfo info;
+					CardInfo info;
 
-				if (rand.Next(0, 101) > MainPlugin.config.OpponentRareCardChance) {
-					info = (CardInfo)card.Info.Clone();
-				} else {
-					info = CardLoader.GetRandomRareCard(CardTemple.Nature);
-					int i;
-					for (i = 0; i < 100 && MainPlugin.config.OpponentRareCardBlacklist.Contains(info.name); i++) {
+					if (rand.Next(0, 101) > MainPlugin.config.OpponentRareCardChance) {
+						info = (CardInfo)card.Info.Clone();
+					} else {
 						info = CardLoader.GetRandomRareCard(CardTemple.Nature);
+						int i;
+						for (i = 0; i < 100 && MainPlugin.config.OpponentRareCardBlacklist.Contains(info.name); i++) {
+							info = CardLoader.GetRandomRareCard(CardTemple.Nature);
+						}
+						if (i == 99) {
+							//FIXME: Unlucky players or those with large blacklists may come across this warning despite there being legal cards
+							MainPlugin.logger.LogWarning("Could not find card not in blacklist; is the blacklist too large?");
+						}
 					}
-					if (i == 99) {
-						//FIXME: Unlucky players or those with large blacklists may come across this warning despite there being legal cards
-						MainPlugin.logger.LogWarning("Could not find card not in blacklist; is the blacklist too large?");
+
+					if (rand.Next(0, 101) < MainPlugin.config.OpponentExtraSigilChance) {
+						var mod = new CardModificationInfo(GetRandoAbility(info.Abilities, rand.Next(0, 1000))) {
+							fromCardMerge = true
+						};
+						info.Mods.Add(mod);
 					}
+
+					if (rand.Next(0, 101) < MainPlugin.config.OpponentCombinedCardChance) {
+						var mod = DuplicateMergeSequencer.GetDuplicateMod(info.Attack, info.Health);
+						info.Mods.Add(mod);
+					}
+
+					//PSA: Do not do card.info = x, instead use card.SetInfo(x)
+					card.SetInfo(info);
+
+					//card.RenderCard();
+				} else {
+					MainPlugin.logger.LogInfo($"Won't buff ignored card {card.Info.name}");
 				}
-
-				if (rand.Next(0, 101) < MainPlugin.config.OpponentExtraSigilChance) {
-					var mod = new CardModificationInfo(GetRandoAbility(info.Abilities, rand.Next(0, 1000))) {
-						fromCardMerge = true
-					};
-					info.Mods.Add(mod);
-				}
-
-				if(rand.Next(0,101) < MainPlugin.config.OpponentCombinedCardChance) {
-					var mod = DuplicateMergeSequencer.GetDuplicateMod(info.Attack, info.Health);
-					info.Mods.Add(mod);
-				}
-
-				//PSA: Do not do card.info = x, instead use card.SetInfo(x)
-				card.SetInfo(info);
-
-				//card.RenderCard();
 			}
 
 			private static Ability GetRandoAbility(List<Ability> blacklist, int seed) {
