@@ -18,6 +18,7 @@ namespace LongHaulMod {
 					if (rand.Next(0, 101) > MainPlugin.config.OpponentRareCardChance) {
 						info = (CardInfo)card.Info.Clone();
 					} else {
+						//FIXME: During totem battles, when replacing a card it keeps its totem sigils
 						info = CardLoader.GetRandomRareCard(CardTemple.Nature);
 						int i;
 						for (i = 0; i < 100 && MainPlugin.config.OpponentRareCardBlacklist.Contains(info.name); i++) {
@@ -55,7 +56,7 @@ namespace LongHaulMod {
 				int i;
 				for (i = 0; i < 100 && blacklist.Contains(outp); i++) {
 					MainPlugin.logger.LogWarning($"Tried to apply illegal sigil {outp} to card. Trying again!");
-					outp = AbilitiesUtil.GetRandomAbility(seed, true, true, maxPower: 5);
+					outp = AbilitiesUtil.GetRandomAbility(seed + i, true, true, maxPower: 5);
 				}
 				if (i == 99) {
 					//FIXME: Unlucky players or those with large blacklists may come across this warning despite there being legal sigils
