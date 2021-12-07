@@ -35,6 +35,7 @@ namespace LongHaulMod {
 			internal float OpponentCombinedCardChance;
 			internal string[] OpponentCardBuffIgnorelist;
 			internal bool PlayerNerfModuleEnabled;
+			internal bool NerfOuroborus;
 		}
 
 		private const string GUID = "io.github.TeamDoodz.LongHaulMod";
@@ -48,6 +49,7 @@ namespace LongHaulMod {
 		private TraderFixModule tf;
 		private BossModule bom;
 		private BattleModule bam;
+		private PlayerNerfModule pm;
 
 		private void Awake() {
 			Logger.LogInfo($"{Name} has been awoken");
@@ -58,9 +60,11 @@ namespace LongHaulMod {
 			if (config.TraderFixEnabled) tf = new TraderFixModule(this);
 			if(config.BossModuleEnabled) bom = new BossModule(this);
 			if (config.BattleModuleEnabled) bam = new BattleModule(this);
+			if (config.PlayerNerfModuleEnabled) pm = new PlayerNerfModule(this);
 
 			if (config.BossModuleEnabled) bom.Awake();
 			if (config.BattleModuleEnabled) bam.Awake();
+			if (config.PlayerNerfModuleEnabled) pm.Awake();
 		}
 
 		private void Start() {
@@ -103,6 +107,7 @@ namespace LongHaulMod {
 			config.OpponentCardBuffIgnorelist = Regex.Split(Config.Bind("BattleModule", "OpponentCardBuffIgnorelist", "Mule, BaitBucket, !DEATHCARD_BASE", "List of cards that will not gain extra buffs. Note: Removing !DEATHCARD_BASE from this list can cause issues! Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
 
 			config.PlayerNerfModuleEnabled = Config.Bind("PlayerNerfModule", "PlayerNerfModuleEnabled", true, "Enable the Player Nerf Module. This module nerfs player-specific cards and actions.").Value;
+			config.NerfOuroborus = Config.Bind("PlayerNerfModule", "PlayerNerfModuleEnabled", true, "If this is true, the stats of the Ouroborus will reset after every battle.").Value;
 		}
 
 	}
