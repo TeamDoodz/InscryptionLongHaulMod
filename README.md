@@ -24,5 +24,8 @@ Buffs difficulty of all battles, not just bosses. Does the following things:
 	* Given a random new sigil
 	* Made combined (stats doubled) 
 
+### Player Nerf Module
+Nerfs things like cards and items. Currently all it does is reset the ouroboros's stats after every battle (configurable).
+
 ## I found a bug/error, what do I do?
 Please report the issue on LongHaul's Github page and ping me on the Inscryption Modding Discord server (teamdoodz#5281).

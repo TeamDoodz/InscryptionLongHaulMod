@@ -184,7 +184,8 @@ namespace LongHaulMod {
 			//if (MainPlugin.config.GunbotsTradeable) metadata.Add(CardMetaCategory.TraderOffer);
 
 			List<Ability> abilities = new List<Ability>() {
-				Ability.Flying
+				Ability.Flying,
+				Ability.Sentry
 			};
 
 			List<CardAppearanceBehaviour.Appearance> appearances = new List<CardAppearanceBehaviour.Appearance>() {
