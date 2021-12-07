@@ -82,10 +82,10 @@ namespace LongHaulMod {
 			config.QueenBeeCost = Config.Bind("BossModule", "QueenBeeCost", 2, new ConfigDescription("How much blood a queen bee costs.")).Value;
 			config.QueenBeeAttack = Config.Bind("BossModule", "QueenBeeAttack", 3, new ConfigDescription("How much power a queen bee has.")).Value;
 			config.QueenBeeHealth = Config.Bind("BossModule", "QueenBeeHP", 3, new ConfigDescription("How much health a queen bee has.")).Value;
-			
-			//config.MoonPowerBuff = Config.Bind("BossModule", "MoonPowerBuff", 1, new ConfigDescription("Adds this amount to the Moon's power.")).Value;
-			//config.MoonHealthBuff = Config.Bind("BossModule", "MoonHealthBuff", 5, new ConfigDescription("Adds this amount to the Moon's health.")).Value;
-			
+
+			config.MoonPowerBuff = Config.Bind("BossModule", "MoonPowerBuff", 1, new ConfigDescription("Adds this amount to the Moon's power.")).Value;
+			config.MoonHealthBuff = Config.Bind("BossModule", "MoonHealthBuff", 5, new ConfigDescription("Adds this amount to the Moon's health.")).Value;
+
 			config.TradeRareCards = Config.Bind("BossModule", "TradeRareCards", true, new ConfigDescription("If this is true, the Tapper/Trader will offer Rare cards during Phase 2 of his fight.")).Value;
 			config.RareRequiresGP = Config.Bind("BossModule", "RareRequiresGP", true, new ConfigDescription("When offering rare cards during Phase 2 of the Trapper/Trader fight, should said rare cards cost Golden Pelts?")).Value;
 			config.RareInscribed = Config.Bind("BossModule", "RareInscribed", true, new ConfigDescription("If this is true, rare cards offered by the Trader boss will gain an extra sigil, similarly to the regular cards.")).Value;
@@ -97,9 +97,9 @@ namespace LongHaulMod {
 			config.OpponentRareCardChance = Config.Bind("BattleModule", "OpponentRareCardChance", 6.25f, "Percent chance for any card the opponent plays to be replaced with a random rare one.").Value;
 			config.OpponentRareCardBlacklist = Regex.Split(Config.Bind("BattleModule", "OpponentRareCardBlacklist", "Amoeba, MontyPython", "Rare cards that the opponent will not play. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
 			config.OpponentExtraSigilChance = Config.Bind("BattleModule", "OpponentExtraSigilChance", 12.5f, "Percent chance for any card the opponent plays to gain a random sigil.").Value;
-			config.OpponentExtraSigilMaxPower = Config.Bind("BattleModule", "OpponentExtraSigilChance", 4, "Maximum level of power sigil to apply to a card, on a scale of 0 to 5.").Value;
+			config.OpponentExtraSigilMaxPower = Config.Bind("BattleModule", "OpponentExtraSigilMaxPower", 4, "Maximum level of power sigil to apply to a card, on a scale of 0 to 5.").Value;
 			config.OpponentCombinedCardChance = Config.Bind("BattleModule", "OpponentCombinedCardChance", 6.25f, "Percent chance for any card the opponent plays to be a combined card with double stats.").Value;
-			config.OpponentCardBuffIgnorelist = Regex.Split(Config.Bind("BattleModule", "OpponentCardBuffIgnorelist", "Mule, BaitBucket", "List of cards that will not gain extra buffs. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
+			config.OpponentCardBuffIgnorelist = Regex.Split(Config.Bind("BattleModule", "OpponentCardBuffIgnorelist", "Mule, BaitBucket, !DEATHCARD_BASE", "List of cards that will not gain extra buffs. Note: Removing !DEATHCARD_BASE from this list can cause issues! Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
 		}
 
 	}

@@ -22,6 +22,17 @@ namespace LongHaulMod {
 				}
 			}
 		}
+		class BuffMoonPatch {
+			static void Prefix(CardInfo info) {
+				if (info.name == "!GIANTCARD_MOON") {
+					MainPlugin.logger.LogInfo("Buffing moon!");
+
+					int p = MainPlugin.config.MoonPowerBuff;
+					int h = MainPlugin.config.MoonHealthBuff;
+					info.Mods.Add(new CardModificationInfo(p,h));
+				}
+			}
+		}
 		class AddRareCardsToTrapperFightPatch {
 			private static CardInfo GetRandomRareCardWithAbility(int randomSeed) {
 				CardInfo outp = CardLoader.GetRandomRareCard(CardTemple.Nature);
@@ -113,17 +124,20 @@ namespace LongHaulMod {
 					PatchGPCost();
 				}
 			}
-			//BuffMoon();
+			PatchBuffMoon();
 			//TODO: finish this
 			//if(MainPlugin.config.ProspectorDontClearQueue) {
 				//PatchProspectorDontClear();
 			//}
 		}
 
-		private void BuffMoon() {
-			int p = MainPlugin.config.MoonPowerBuff;
-			int h = MainPlugin.config.MoonHealthBuff;
-			CardLoader.GetCardByName("!GIANTCARD_MOON").Mods.Add(new CardModificationInfo(p,h));
+		private void PatchBuffMoon() {
+			var harmony = new Harmony(plugin.Info.Metadata.GUID + ".BossModule." + nameof(BuffMoonPatch));
+
+			var cc_original = typeof(BoardManager).GetMethod("CreateCardInSlot", BindingFlags.Public | BindingFlags.Instance);
+			var cc_prefix = typeof(BuffMoonPatch).GetMethod("Prefix", BindingFlags.NonPublic | BindingFlags.Static);
+
+			harmony.Patch(cc_original, prefix: new HarmonyMethod(cc_prefix));
 		}
 
 		private void PatchProspectorDontClear() {
