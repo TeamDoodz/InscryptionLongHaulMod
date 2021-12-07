@@ -8,8 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace LongHaulMod {
 	[BepInPlugin(GUID, Name, Version)]
-	[BepInDependency("cyantist.inscryption.api", BepInDependency.DependencyFlags.HardDependency)]
-	[BepInDependency("extraVoid.inscryption.voidSigils", BepInDependency.DependencyFlags.SoftDependency)]
+	[BepInDependency("cyantist.inscryption.api", BepInDependency.DependencyFlags.HardDependency)] 
 	public class MainPlugin : BaseUnityPlugin {
 
 		public struct ConfigOptions {
@@ -35,6 +34,7 @@ namespace LongHaulMod {
 			internal int OpponentExtraSigilMaxPower;
 			internal float OpponentCombinedCardChance;
 			internal string[] OpponentCardBuffIgnorelist;
+			internal bool PlayerNerfModuleEnabled;
 		}
 
 		private const string GUID = "io.github.TeamDoodz.LongHaulMod";
@@ -101,6 +101,8 @@ namespace LongHaulMod {
 			config.OpponentExtraSigilMaxPower = Config.Bind("BattleModule", "OpponentExtraSigilMaxPower", 4, "Maximum level of power sigil to apply to a card, on a scale of 0 to 5.").Value;
 			config.OpponentCombinedCardChance = Config.Bind("BattleModule", "OpponentCombinedCardChance", 6.25f, "Percent chance for any card the opponent plays to be a combined card with double stats.").Value;
 			config.OpponentCardBuffIgnorelist = Regex.Split(Config.Bind("BattleModule", "OpponentCardBuffIgnorelist", "Mule, BaitBucket, !DEATHCARD_BASE", "List of cards that will not gain extra buffs. Note: Removing !DEATHCARD_BASE from this list can cause issues! Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
+
+			config.PlayerNerfModuleEnabled = Config.Bind("PlayerNerfModule", "PlayerNerfModuleEnabled", true, "Enable the Player Nerf Module. This module nerfs player-specific cards and actions.").Value;
 		}
 
 	}

@@ -184,16 +184,8 @@ namespace LongHaulMod {
 			//if (MainPlugin.config.GunbotsTradeable) metadata.Add(CardMetaCategory.TraderOffer);
 
 			List<Ability> abilities = new List<Ability>() {
-				Ability.Flying,
-				Ability.Sentry
+				Ability.Flying
 			};
-			// If the Sentry sigil isn't in the Act I rulebook, add it
-			//TODO: For some reason this code makes API error out. Probably not my fault.
-			/*
-			{
-				AbilityInfo abilityInfo = AbilitiesUtil.GetInfo(Ability.Sentry);
-				if(!abilityInfo.metaCategories.Contains(AbilityMetaCategory.Part1Rulebook)) abilityInfo.metaCategories.Add(AbilityMetaCategory.Part1Rulebook);
-			}*/
 
 			List<CardAppearanceBehaviour.Appearance> appearances = new List<CardAppearanceBehaviour.Appearance>() {
 				CardAppearanceBehaviour.Appearance.RareCardBackground
