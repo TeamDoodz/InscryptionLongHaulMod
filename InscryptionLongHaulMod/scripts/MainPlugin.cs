@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 namespace LongHaulMod {
 	[BepInPlugin(GUID, Name, Version)]
 	[BepInDependency("cyantist.inscryption.api", BepInDependency.DependencyFlags.HardDependency)]
+	[BepInDependency("extraVoid.inscryption.voidSigils", BepInDependency.DependencyFlags.SoftDependency)]
 	public class MainPlugin : BaseUnityPlugin {
 
 		public struct ConfigOptions {
