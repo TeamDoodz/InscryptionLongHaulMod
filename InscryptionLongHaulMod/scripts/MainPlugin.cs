@@ -99,7 +99,7 @@ namespace LongHaulMod {
 
 			config.BattleModuleEnabled = Config.Bind("BattleModule", "BattleEnabled", true, "Enables the Battle Module. This one makes all battles, not just bosses, more difficult.").Value;
 			
-			config.OpponentRareCardChance = Config.Bind("BattleModule", "OpponentRareCardChance", 6.25f, "Percent chance for any card the opponent plays to be replaced with a random rare one.").Value;
+			config.OpponentRareCardChance = Config.Bind("BattleModule", "OpponentRareCardChance", 3.125f, "Percent chance for any card the opponent plays to be replaced with a random rare one.").Value;
 			config.OpponentRareCardBlacklist = Regex.Split(Config.Bind("BattleModule", "OpponentRareCardBlacklist", "Amoeba, MontyPython", "Rare cards that the opponent will not play. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
 			config.OpponentExtraSigilChance = Config.Bind("BattleModule", "OpponentExtraSigilChance", 12.5f, "Percent chance for any card the opponent plays to gain a random sigil.").Value;
 			config.OpponentExtraSigilMaxPower = Config.Bind("BattleModule", "OpponentExtraSigilMaxPower", 4, "Maximum level of power sigil to apply to a card, on a scale of 0 to 5.").Value;
