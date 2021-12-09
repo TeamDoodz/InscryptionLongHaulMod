@@ -9,7 +9,14 @@ namespace LongHaulMod {
 	class BattleModule : ModuleBase {
 
 		class BuffPlayedCardsPatch {
+			/// <summary>
+			/// If this is true, this modifer will not have an effect. Bit of a hacky way of doing it but whatever. Make sure to turn this back off after calling <see cref="BoardManager.QueueCardForSlot(PlayableCard, CardSlot, float, bool, bool)"/>.
+			/// </summary>
+			public static bool TempDisable = false;
 			static void Prefix(PlayableCard card) {
+				if(TempDisable) {
+					MainPlugin.logger.LogInfo("BuffPlayedCardsPatch has been temporarily disabled! Make sure to turn it back on after you are done!");
+				}
 				if (!MainPlugin.config.OpponentCardBuffIgnorelist.Contains(card.Info.name)) {
 					Random rand = new Random();
 
@@ -65,6 +72,14 @@ namespace LongHaulMod {
 				return outp;
 			}
 		}
+		class DisableBuffDuringTraderPhasePatch {
+			static void Prefix() {
+				BuffPlayedCardsPatch.TempDisable = true;
+			}
+			static void Postfix() {
+				BuffPlayedCardsPatch.TempDisable = false;
+			}
+		}
 
 		public BattleModule(MainPlugin plugin) : base(plugin) {
 			instance = this;
@@ -74,6 +89,17 @@ namespace LongHaulMod {
 
 		public override void Awake() {
 			PatchBuffedOpponentCards();
+			PatchTrapperTraderDisabling();
+		}
+
+		private void PatchTrapperTraderDisabling() {
+			var harmony = new Harmony($"{plugin.Info.Metadata.GUID}.BattleModule.{nameof(DisableBuffDuringTraderPhasePatch)}");
+
+			var original = typeof(TradeCardsForPelts).GetMethod("TradePhase", BindingFlags.Public | BindingFlags.Instance);
+			var prefix = typeof(DisableBuffDuringTraderPhasePatch).GetMethod("Prefix", BindingFlags.NonPublic | BindingFlags.Static);
+			var postfix = typeof(DisableBuffDuringTraderPhasePatch).GetMethod("Postfix", BindingFlags.NonPublic | BindingFlags.Static);
+
+			harmony.Patch(original, prefix: new HarmonyMethod(prefix), postfix: new HarmonyMethod(postfix));
 		}
 
 		private void PatchBuffedOpponentCards() {
