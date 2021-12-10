@@ -1,6 +1,7 @@
 ﻿using DiskCardGame;
 using HarmonyLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,8 +17,9 @@ namespace LongHaulMod {
 			static void Prefix(PlayableCard card) {
 				if(TempDisable) {
 					MainPlugin.logger.LogInfo("BuffPlayedCardsPatch has been temporarily disabled! Make sure to turn it back on after you are done!");
-				}
-				if (!MainPlugin.config.OpponentCardBuffIgnorelist.Contains(card.Info.name)) {
+				} else if (!MainPlugin.config.OpponentCardBuffIgnorelist.Contains(card.Info.name)) {
+					MainPlugin.logger.LogInfo($"Ready to buff card {card.Info.name}");
+
 					Random rand = new Random();
 
 					CardInfo info;
@@ -75,9 +77,12 @@ namespace LongHaulMod {
 		class DisableBuffDuringTraderPhasePatch {
 			static void Prefix() {
 				BuffPlayedCardsPatch.TempDisable = true;
+				MainPlugin.logger.LogInfo("Disabled BuffPlayedCardsPatch");
 			}
-			static void Postfix() {
+			static IEnumerator Postfix(IEnumerator enumerator) {
+				yield return enumerator;
 				BuffPlayedCardsPatch.TempDisable = false;
+				MainPlugin.logger.LogInfo("Enabled BuffPlayedCardsPatch");
 			}
 		}
 
