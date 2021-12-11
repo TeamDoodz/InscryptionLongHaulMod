@@ -25,7 +25,9 @@ Buffs difficulty of all battles, not just bosses. Does the following things:
 	* Made combined (stats doubled) 
 
 ### Player Nerf Module
-Nerfs things like cards and items. Currently all it does is reset the ouroboros's stats after every battle (configurable).
+Nerfs things like cards and items. Does the following things:
+ * Ouroborus stats are reset after each battle
+ * The squirrel head you get at the start of each run is replaced with a random other totem head.
 
 ## I found a bug/error, what do I do?
 Please report the issue on LongHaul's Github page and ping me on the Inscryption Modding Discord server (teamdoodz#5281).
