@@ -36,6 +36,7 @@ namespace LongHaulMod {
 			internal string[] OpponentCardBuffIgnorelist;
 			internal bool PlayerNerfModuleEnabled;
 			internal bool NerfOuroborus;
+			internal bool RemoveSquirrelHead;
 		}
 
 		private const string GUID = "io.github.TeamDoodz.LongHaulMod";
@@ -108,6 +109,7 @@ namespace LongHaulMod {
 
 			config.PlayerNerfModuleEnabled = Config.Bind("PlayerNerfModule", "PlayerNerfModuleEnabled", true, "Enable the Player Nerf Module. This module nerfs player-specific cards and actions.").Value;
 			config.NerfOuroborus = Config.Bind("PlayerNerfModule", "PlayerNerfModuleEnabled", true, "If this is true, the stats of the Ouroborus will reset after every battle.").Value;
+			config.RemoveSquirrelHead = Config.Bind("PlayerNerfModule", "RemoveSquirrelHead", true, "Replace the quirrel head you get at the start of a run with a random other totem head.").Value;
 		}
 
 	}
