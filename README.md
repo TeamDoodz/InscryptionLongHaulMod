@@ -16,6 +16,7 @@ Makes bosses more difficult. Does the following things:
 * The Moon card now has +1 power and +5 health. This is configurable.
 * During phase 2 of his fight, the Trapper/Trader will offer rare cards for sale as well as the normal cards he usually provides. A blacklist can be used to restrict the cards he pulls out.
 * These rare cards cost Golden Pelts to purchase.
+* The Bait Buckets spawned by the Angler will gain the Mighty Leap and Sharp Quills sigils.
 
 ### Battle Module
 Buffs difficulty of all battles, not just bosses. Does the following things:

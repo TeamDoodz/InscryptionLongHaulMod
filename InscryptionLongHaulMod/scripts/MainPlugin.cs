@@ -27,6 +27,7 @@ namespace LongHaulMod {
 			public int MoonHealthBuff;
 			internal bool RareInscribed;
 			internal string[] RareBlacklist;
+			internal bool BuffBaitBucket;
 			internal bool BattleModuleEnabled;
 			internal float OpponentRareCardChance;
 			internal string[] OpponentRareCardBlacklist;
@@ -95,6 +96,8 @@ namespace LongHaulMod {
 			config.RareRequiresGP = Config.Bind("BossModule", "RareRequiresGP", true, new ConfigDescription("When offering rare cards during Phase 2 of the Trapper/Trader fight, should said rare cards cost Golden Pelts?")).Value;
 			config.RareInscribed = Config.Bind("BossModule", "RareInscribed", true, new ConfigDescription("If this is true, rare cards offered by the Trader boss will gain an extra sigil, similarly to the regular cards.")).Value;
 			config.RareBlacklist = Regex.Split(Config.Bind("BossModule", "RareBlacklist", "Amoeba, MontyPython, Garethmod_Golem", new ConfigDescription("Rare cards that shouldn't be played by the Trapper/Trader during his fight. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
+
+			config.BuffBaitBucket = Config.Bind("BossModule", "BuffBaitBucket", true, new ConfigDescription("The Bait Buckets spawned by the Angler will gain the Mighty Leap and Sharp Quills sigils.")).Value;
 			//config.ProspectorDontClearQueue = Config.Bind("BossModule", "ProspectorDontClearQueue", false, new ConfigDescription("(UNFINISHED FEATURE - WILL CREATE ERRORS.) If this is true, the Prospector will not clear his queue after entering phase 2 of his fight.")).Value;
 
 			config.BattleModuleEnabled = Config.Bind("BattleModule", "BattleEnabled", true, "Enables the Battle Module. This one makes all battles, not just bosses, more difficult.").Value;

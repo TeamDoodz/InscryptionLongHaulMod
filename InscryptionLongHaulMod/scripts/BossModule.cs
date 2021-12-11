@@ -124,6 +124,9 @@ namespace LongHaulMod {
 					PatchGPCost();
 				}
 			}
+			if(MainPlugin.config.BuffBaitBucket) {
+				_ = new CustomCard("BaitBucket") { abilities = new List<Ability>() { Ability.Reach, Ability.Sharp } };
+			}
 			PatchBuffMoon();
 			//TODO: finish this
 			//if(MainPlugin.config.ProspectorDontClearQueue) {
