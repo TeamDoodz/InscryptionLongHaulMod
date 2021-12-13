@@ -6,6 +6,8 @@ Tweaks, features and bugfixes to make the game harder. This mod is highly config
 This mod is split into seperate modules that can be enabled/disabled in the config.
 
 ### Trader Fix Module
+*(I have finally given in to the peer pressure and have turned this module off by default. If you would like it on, make sure the ignorelist conatins all rare cards that you do not want to appear in boss drops/trader offers.)*
+
 This module will force cards with the rare card background to be rare cards and not appear in choice nodes. It will also prevent rare cards from being sold for wolf pelts or lower. The ignorelist can be used to make this module ignore certain cards. (This is less of a bug and more user error; this issue occurs when a card's metadata is setup improperly).
 Additionally, any card marked as rare (that is not on the ignorelist) is forced to have the rare background.
 
