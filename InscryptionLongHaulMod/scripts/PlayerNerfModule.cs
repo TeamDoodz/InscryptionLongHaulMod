@@ -3,6 +3,7 @@ using HarmonyLib;
 using LongHaulMod.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -21,11 +22,16 @@ namespace LongHaulMod {
 			static AccessTools.FieldRef<RunState, List<Tribe>> totemTopsRef = AccessTools.FieldRefAccess<RunState, List<Tribe>>("totemTops");
 			static void Postfix(RunState __instance) {
 				// Any squirrel heads in the list of totem tops should be replaced with a random head
-				List<Tribe> copiedList = totemTopsRef(__instance);
-				for(int i=0; i< totemTopsRef(__instance).Count; i++) {
+
+				Tribe[] copiedList = new Tribe[totemTopsRef(__instance).Count];
+				totemTopsRef(__instance).CopyTo(copiedList);
+
+				for (int i=0; i< totemTopsRef(__instance).Count; i++) {
 					if (copiedList[i] == Tribe.Squirrel) copiedList[i] = Util.AllTribesButSquirrel.PickRandom(UnityEngine.Random.Range(-100, 100));
 				}
-				totemTopsRef(__instance) = copiedList;
+				totemTopsRef(__instance) = copiedList.ToList();
+
+				MainPlugin.logger.LogInfo(totemTopsRef(__instance).ReadableToString("totemTops"));
 			}
 		}
 
