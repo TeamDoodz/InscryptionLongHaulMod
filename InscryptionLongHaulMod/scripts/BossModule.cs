@@ -57,10 +57,15 @@ namespace LongHaulMod {
 				return outp;
 			}
 
-			static void Postfix(ref List<CardInfo> __result, int numCards, int randomSeed) {
+			static bool Postfix(ref List<CardInfo> __result, int numCards, int randomSeed) {
+				// Doing this prevents softlocking as shown in https://github.com/TeamDoodz/InscryptionLongHaulMod/issues/8
+				if (__result.Count < 2) return true;
+
 				System.Random random = new System.Random(randomSeed);
 
 				__result[random.Next(0, numCards)] = GetRandomRareCardWithAbility(randomSeed*200);
+
+				return true;
 			}
 		}
 		class PreventBuyingRaresWithInferiorPeltsPatch {

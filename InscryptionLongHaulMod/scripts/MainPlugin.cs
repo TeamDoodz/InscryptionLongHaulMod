@@ -110,7 +110,7 @@ namespace LongHaulMod {
 			config.OpponentCardBuffIgnorelist = Regex.Split(Config.Bind("BattleModule", "OpponentCardBuffIgnorelist", "Mule, BaitBucket, !DEATHCARD_BASE, !GIANTCARD_MOON", "List of cards that will not gain extra buffs. Note: Removing !DEATHCARD_BASE from this list can cause issues! Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
 
 			config.PlayerNerfModuleEnabled = Config.Bind("PlayerNerfModule", "PlayerNerfModuleEnabled", true, "Enable the Player Nerf Module. This module nerfs player-specific cards and actions.").Value;
-			config.NerfOuroborus = Config.Bind("PlayerNerfModule", "PlayerNerfModuleEnabled", true, "If this is true, the stats of the Ouroborus will reset after every battle.").Value;
+			config.NerfOuroborus = Config.Bind("PlayerNerfModule", "NerfOuroborus", false, "If this is true, the stats of the Ouroborus will reset after every battle.").Value;
 		}
 
 	}
