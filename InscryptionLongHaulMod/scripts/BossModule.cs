@@ -35,12 +35,12 @@ namespace LongHaulMod {
 		}
 		class AddRareCardsToTrapperFightPatch {
 			private static CardInfo GetRandomRareCardWithAbility(int randomSeed) {
-				CardInfo outp = CardLoader.GetRandomRareCard(CardTemple.Nature);
+				CardInfo outp = CardLoader.GetRandomUnlockedRareCard(UnityEngine.Random.Range(-100, 100));
 				// we dont want a card in the blacklist, so get new ones until we get a legal one
 				{
 					int i;
 					for (i = 0; i < 100 && MainPlugin.config.RareBlacklist.Contains(outp.name); i++) {
-						outp = CardLoader.GetRandomRareCard(CardTemple.Nature);
+						outp = CardLoader.GetRandomUnlockedRareCard(UnityEngine.Random.Range(-100, 100));
 					}
 					if (i == 99) {
 						//FIXME: Unlucky players or those with large blacklists may come across this warning despite there being legal cards
