@@ -27,6 +27,7 @@ namespace LongHaulMod {
 			public int MoonHealthBuff;
 			internal bool RareInscribed;
 			internal string[] RareBlacklist;
+			internal bool BuffBaitBucket;
 			internal bool BattleModuleEnabled;
 			internal float OpponentRareCardChance;
 			internal string[] OpponentRareCardBlacklist;
@@ -76,7 +77,7 @@ namespace LongHaulMod {
 		private void GetConfig() {
 			Logger.LogInfo($"Reading config..."); 
 
-			config.TraderFixEnabled = Config.Bind("TraderFixModule", "TraderFixEnabled", true, new ConfigDescription("Enable the Trader Fix module. This will force cards with the rare card background to be rare cards and not appear in choice nodes. It will also prevent rare cards from being sold for wolf pelts or lower. Keep in mind that some cards like the Treant don't need to be \"fixed\" and should go to the ignorelist.")).Value;
+			config.TraderFixEnabled = Config.Bind("TraderFixModule", "TraderFixEnabled", false, new ConfigDescription("Enable the Trader Fix module. This will force cards with the rare card background to be rare cards and not appear in choice nodes. It will also prevent rare cards from being sold for wolf pelts or lower. Keep in mind that some cards like the Treant don't need to be \"fixed\" and should go to the ignorelist.")).Value;
 			
 			config.RareCardIgnorelist = Regex.Split(Config.Bind("TraderFixModule", "RareCardIgnorelist", "Gareth48, Garethmod_Treant, Garethmod_Snag, beast_2, beast_3, caninegod, hoovedgod", new ConfigDescription("Cards to ignore when fixing. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
 			config.ForceRareBG = Config.Bind("TraderFixModule", "ForceRareBG", true, new ConfigDescription("Forces rare cards to have the rare background.")).Value;
@@ -94,20 +95,22 @@ namespace LongHaulMod {
 			config.TradeRareCards = Config.Bind("BossModule", "TradeRareCards", true, new ConfigDescription("If this is true, the Tapper/Trader will offer Rare cards during Phase 2 of his fight.")).Value;
 			config.RareRequiresGP = Config.Bind("BossModule", "RareRequiresGP", true, new ConfigDescription("When offering rare cards during Phase 2 of the Trapper/Trader fight, should said rare cards cost Golden Pelts?")).Value;
 			config.RareInscribed = Config.Bind("BossModule", "RareInscribed", true, new ConfigDescription("If this is true, rare cards offered by the Trader boss will gain an extra sigil, similarly to the regular cards.")).Value;
-			config.RareBlacklist = Regex.Split(Config.Bind("BossModule", "RareBlacklist", "Amoeba, MontyPython", new ConfigDescription("Rare cards that shouldn't be played by the Trapper/Trader during his fight. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
+			config.RareBlacklist = Regex.Split(Config.Bind("BossModule", "RareBlacklist", "Amoeba, MontyPython, Garethmod_Golem", new ConfigDescription("Rare cards that shouldn't be played by the Trapper/Trader during his fight. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.")).Value, @",\s*");
+
+			config.BuffBaitBucket = Config.Bind("BossModule", "BuffBaitBucket", true, new ConfigDescription("The Bait Buckets spawned by the Angler will gain the Mighty Leap and Sharp Quills sigils.")).Value;
 			//config.ProspectorDontClearQueue = Config.Bind("BossModule", "ProspectorDontClearQueue", false, new ConfigDescription("(UNFINISHED FEATURE - WILL CREATE ERRORS.) If this is true, the Prospector will not clear his queue after entering phase 2 of his fight.")).Value;
 
 			config.BattleModuleEnabled = Config.Bind("BattleModule", "BattleEnabled", true, "Enables the Battle Module. This one makes all battles, not just bosses, more difficult.").Value;
 			
 			config.OpponentRareCardChance = Config.Bind("BattleModule", "OpponentRareCardChance", 3.125f, "Percent chance for any card the opponent plays to be replaced with a random rare one.").Value;
-			config.OpponentRareCardBlacklist = Regex.Split(Config.Bind("BattleModule", "OpponentRareCardBlacklist", "Amoeba, MontyPython", "Rare cards that the opponent will not play. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
+			config.OpponentRareCardBlacklist = Regex.Split(Config.Bind("BattleModule", "OpponentRareCardBlacklist", "Amoeba, MontyPython, JerseyDevil", "Rare cards that the opponent will not play. Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
 			config.OpponentExtraSigilChance = Config.Bind("BattleModule", "OpponentExtraSigilChance", 12.5f, "Percent chance for any card the opponent plays to gain a random sigil.").Value;
 			config.OpponentExtraSigilMaxPower = Config.Bind("BattleModule", "OpponentExtraSigilMaxPower", 4, "Maximum level of power sigil to apply to a card, on a scale of 0 to 5.").Value;
 			config.OpponentCombinedCardChance = Config.Bind("BattleModule", "OpponentCombinedCardChance", 6.25f, "Percent chance for any card the opponent plays to be a combined card with double stats.").Value;
 			config.OpponentCardBuffIgnorelist = Regex.Split(Config.Bind("BattleModule", "OpponentCardBuffIgnorelist", "Mule, BaitBucket, !DEATHCARD_BASE, !GIANTCARD_MOON", "List of cards that will not gain extra buffs. Note: Removing !DEATHCARD_BASE from this list can cause issues! Entries seperated by commas; any whitespace after a comma is removed. Use the internal name of a card - not its display name.").Value, @",\s*");
 
 			config.PlayerNerfModuleEnabled = Config.Bind("PlayerNerfModule", "PlayerNerfModuleEnabled", true, "Enable the Player Nerf Module. This module nerfs player-specific cards and actions.").Value;
-			config.NerfOuroborus = Config.Bind("PlayerNerfModule", "PlayerNerfModuleEnabled", true, "If this is true, the stats of the Ouroborus will reset after every battle.").Value;
+			config.NerfOuroborus = Config.Bind("PlayerNerfModule", "NerfOuroborus", false, "If this is true, the stats of the Ouroborus will reset after every battle.").Value;
 		}
 
 	}
