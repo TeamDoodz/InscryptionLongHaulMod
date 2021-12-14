@@ -8,7 +8,7 @@ assignees: TeamDoodz
 ---
 
 **Description**
-Short summary of what the bug is.
+<!-- Short summary of what the bug is. -->
 
 **Info**
 - OS:
@@ -16,16 +16,17 @@ Short summary of what the bug is.
 - Mod Version:
 
 **Reproduction Steps:**
+<!-- Please be as specific as you can. -->
 1. Do Something
 2. Do Something else
 3. ???
 4. Profit
 
 **Expected behavior**
-What would have happened, had this bug been fixed?
+<!-- What would have happened, had this bug been fixed? -->
 
 **Actual behavior**
-What actually happened?
+<!-- What actually happened? -->
 
 **Additional Notes**
-Provide things like screenshots and BepInEx logs.
+<!-- Provide things like screenshots and BepInEx logs. -->
