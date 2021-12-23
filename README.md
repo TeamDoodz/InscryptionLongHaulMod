@@ -1,5 +1,6 @@
 # LongHaul
-Tweaks, features and bugfixes to make the game harder. This mod is highly configurable - if you don't like a feature, disable it.
+Tweaks, features and bugfixes to make the game harder. This mod is highly configurable - if you don't like a feature, disable it. <br/>
+*Now compatible with Kaycee's mod! (kinda)*
 
 ## Modules
 
