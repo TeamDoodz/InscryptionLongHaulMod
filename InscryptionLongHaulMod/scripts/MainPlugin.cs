@@ -54,6 +54,9 @@ namespace LongHaulMod {
 
 		private void Awake() {
 			Logger.LogInfo($"{Name} has been awoken");
+#if KAYCEECOMPAT
+			Logger.LogMessage("Running in kaycee compat mode");
+#endif
 			logger = Logger;
 
 			GetConfig();
