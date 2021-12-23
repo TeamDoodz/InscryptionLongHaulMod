@@ -28,10 +28,18 @@ namespace LongHaulMod {
 						info = (CardInfo)card.Info.Clone();
 					} else {
 						//FIXME: During totem battles, when replacing a card it keeps its totem sigils
+#if KAYCEECOMPAT
+						info = CardLoader.GetRandomUnlockedRareCard(rand.Next(0, 1000));
+#else
 						info = CardLoader.GetRandomRareCard(CardTemple.Nature);
+#endif
 						int i;
 						for (i = 0; i < 100 && MainPlugin.config.OpponentRareCardBlacklist.Contains(info.name); i++) {
+#if KAYCEECOMPAT
+							info = CardLoader.GetRandomUnlockedRareCard(rand.Next(0, 1000));
+#else
 							info = CardLoader.GetRandomRareCard(CardTemple.Nature);
+#endif
 						}
 						if (i == 99) {
 							//FIXME: Unlucky players or those with large blacklists may come across this warning despite there being legal cards
@@ -61,11 +69,19 @@ namespace LongHaulMod {
 			}
 
 			private static Ability GetRandoAbility(List<Ability> blacklist, int seed) {
+#if KAYCEECOMPAT
+				Ability outp = AbilitiesUtil.GetRandomLearnedAbility(seed, true, maxPower: MainPlugin.config.OpponentExtraSigilMaxPower);
+#else
 				Ability outp = AbilitiesUtil.GetRandomAbility(seed,true,true,maxPower:MainPlugin.config.OpponentExtraSigilMaxPower);
+#endif
 				int i;
 				for (i = 0; i < 100 && blacklist.Contains(outp); i++) {
 					MainPlugin.logger.LogWarning($"Tried to apply illegal sigil {outp} to card. Trying again!");
-					outp = AbilitiesUtil.GetRandomAbility(seed + i, true, true, maxPower: MainPlugin.config.OpponentExtraSigilMaxPower);
+#if KAYCEECOMPAT
+					outp = AbilitiesUtil.GetRandomLearnedAbility(seed, true, maxPower: MainPlugin.config.OpponentExtraSigilMaxPower);
+#else
+					outp = AbilitiesUtil.GetRandomAbility(seed,true,true,maxPower:MainPlugin.config.OpponentExtraSigilMaxPower);
+#endif
 				}
 				if (i == 99) {
 					//FIXME: Unlucky players or those with large blacklists may come across this warning despite there being legal sigils
