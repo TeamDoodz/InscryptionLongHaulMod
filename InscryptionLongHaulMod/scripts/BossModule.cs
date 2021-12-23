@@ -186,7 +186,7 @@ namespace LongHaulMod {
 
 		private void AddQueenBee() {
 			List<CardMetaCategory> metadata = new List<CardMetaCategory>() {
-				CardMetaCategory.Rare
+				//CardMetaCategory.Rare
 			};
 
 			//if (MainPlugin.config.GunbotsTradeable) metadata.Add(CardMetaCategory.TraderOffer);
@@ -202,7 +202,7 @@ namespace LongHaulMod {
 
 			List<Tribe> tribes = new List<Tribe>() { Tribe.Insect };
 
-			string name = "QueenBee";
+			string name = "LH_QueenBee";
 			string displayName = "Queen Bee";
 
 			// This is what Leshy will say the first time you see this card from a boss drop or a choice node.
